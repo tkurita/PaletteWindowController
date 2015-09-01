@@ -94,14 +94,21 @@ static id VisibilityController;
 #if useLog
 	NSLog(@"start applicationWillTerminate in PaletteWindowController");
 #endif	
-	[self saveDefaults];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)saveDefaults
 {
 	NSWindow *a_window = [self window];
-	if (_frameName && !_isCollapsed) [a_window saveFrameUsingName:_frameName];
+    if (_collapsedStateName) {
+        [[NSUserDefaults standardUserDefaults] setBool:_isCollapsed forKey:_collapsedStateName];
+    }
+	if (_frameName) {
+        if (_isCollapsed) {
+            [self toggleCollapseWithAnimate:NO];
+        }
+        [a_window saveFrameUsingName:_frameName];
+    }
 }
 
 #pragma mark methods for toggle visibility
@@ -211,6 +218,11 @@ static id VisibilityController;
 	NSWindow *theWindow = [self window];
 	[theWindow center];
 	if (_frameName) [theWindow setFrameUsingName:_frameName];
+    if (_collapsedStateName) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:_collapsedStateName]) {
+            [self toggleCollapseWithAnimate:NO];
+        }
+    }
 	[super windowDidLoad];
 }
 
@@ -250,7 +262,6 @@ static id VisibilityController;
 	NSLog(@"start windowShouldClose");
 #endif
 	self.isOpened = NO;
-	[self saveDefaults];
 	[VisibilityController removeWindowController:self];
 	return YES;
 }

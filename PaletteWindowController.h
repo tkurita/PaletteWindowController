@@ -13,6 +13,7 @@
 @property NSArray *applicationsFloatingOn;
 @property NSArray *appIdentifiersFloatingOn;
 @property NSString *frameName;
+@property NSString *collapsedStateName;
 @property BOOL isOpened;
 @property BOOL isCollapsed;
 
