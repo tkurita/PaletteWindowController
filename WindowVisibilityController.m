@@ -64,7 +64,7 @@ static void focusChanged(AXObserverRef observer, AXUIElementRef element, CFStrin
 	NSDictionary *app_dict = [[NSWorkspace sharedWorkspace] activeApplication];
 	int pid = [[NSProcessInfo processInfo] processIdentifier];
 	VisibilityUpdateMode showFlag;
-	if ([[app_dict objectForKey:@"NSApplicationProcessIdentifier"] intValue] == pid) {
+	if ([app_dict[@"NSApplicationProcessIdentifier"] intValue] == pid) {
 #if useLog
 		NSLog(@"current application is active");
 #endif

@@ -117,14 +117,14 @@ static id VisibilityController;
 #if useLog
 	NSLog(@"start shouldUpdateVisibilityForApp");
 #endif
-	NSString *app_identifier = [appDict objectForKey:@"NSApplicationBundleIdentifier"]; 
+	NSString *app_identifier = appDict[@"NSApplicationBundleIdentifier"]; 
 	
 	BOOL result = NO;
 	if (app_identifier != nil)
 		result = [_appIdentifiersFloatingOn containsObject:app_identifier];
 	
 	if (!result) {
-		NSString *app_name = [appDict objectForKey:@"NSApplicationName"];
+		NSString *app_name = appDict[@"NSApplicationName"];
 		result = [_applicationsFloatingOn containsObject:app_name];
 	}
 	
